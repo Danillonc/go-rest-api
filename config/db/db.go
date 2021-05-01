@@ -3,7 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"go-rest-api/config/dbconst"
+	"go-rest-api/config/db/dbconst"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -19,7 +19,7 @@ func OpenConnectionDb() *sql.DB {
 }
 
 func configUri() string {
-	envs, err := godotenv.Read()
+	envs, err := godotenv.Read("config/env/.env")
 	if err != nil {
 		panic(err.Error())
 	}

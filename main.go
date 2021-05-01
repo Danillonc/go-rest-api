@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	routes.LoadApiRoutes()
-	http.ListenAndServe(":8080", nil)
+	routes := routes.LoadApiRoutes()
+	http.ListenAndServe(":8080", routes)
 }
