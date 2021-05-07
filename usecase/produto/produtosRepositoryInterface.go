@@ -1,4 +1,4 @@
-package repository
+package produto
 
 import "go-rest-api/domain"
 
