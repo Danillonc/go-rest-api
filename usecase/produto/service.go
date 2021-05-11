@@ -1,6 +1,9 @@
 package produto
 
-import "go-rest-api/domain"
+import (
+	"fmt"
+	"go-rest-api/domain"
+)
 
 type ProdutoService struct {
 	repository ProdutoRepository
@@ -12,20 +15,23 @@ func NewService(repo ProdutoRepository) *ProdutoService {
 	}
 }
 
-func CriarProdutoService(produto *domain.Produto) {
+func (s *ProdutoService) CriarProdutoService(produto *domain.Produto) {
+	//chamar repository para persistir os dados.
+	s.repository.CriarProduto(produto)
+	fmt.Println("produto: ", produto)
 
 }
 
-func BuscarProdutoService(idProduto string) *domain.Produto {
+func (s *ProdutoService) BuscarProdutoService(idProduto string) *domain.Produto {
 	return nil
 
 }
 
-func AtualizarProdutoService(produto *domain.Produto) *domain.Produto {
+func (s *ProdutoService) AtualizarProdutoService(produto *domain.Produto) *domain.Produto {
 	return nil
 
 }
 
-func DeletarProdutoService(id string) {
+func (s *ProdutoService) DeletarProdutoService(id string) {
 
 }

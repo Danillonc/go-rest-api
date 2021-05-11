@@ -1,11 +1,23 @@
 package main
 
 import (
+	"go-rest-api/config/db"
+	"go-rest-api/infrastructure/repository"
 	"go-rest-api/routes"
+	"go-rest-api/usecase/produto"
+	"log"
 	"net/http"
 )
 
 func main() {
-	routes := routes.LoadApiRoutes()
-	http.ListenAndServe(":8080", routes)
+	db := db.OpenConnectionDb()
+	produtoRepo := repository.NewPostgresSQL(db)
+	produtoService := produto.NewService(produtoRepo)
+	routes := routes.LoadApiRoutes(produtoService)
+
+	err := http.ListenAndServe(":8080", routes)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
 }

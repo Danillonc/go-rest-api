@@ -14,7 +14,6 @@ func OpenConnectionDb() *sql.DB {
 	if err != nil {
 		panic(err.Error())
 	}
-
 	return db
 }
 
