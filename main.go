@@ -4,7 +4,7 @@ import (
 	"go-rest-api/config/db"
 	"go-rest-api/infrastructure/repository"
 	"go-rest-api/routes"
-	"go-rest-api/usecase/produto"
+	"go-rest-api/service/produto"
 	"log"
 	"net/http"
 )

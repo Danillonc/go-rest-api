@@ -9,6 +9,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+//Function responsib le to open connection with a database
 func OpenConnectionDb() *sql.DB {
 	db, err := sql.Open("postgres", configUri())
 	if err != nil {

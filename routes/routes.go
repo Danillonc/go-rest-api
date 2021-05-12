@@ -2,12 +2,13 @@ package routes
 
 import (
 	"go-rest-api/api/handlers"
-	"go-rest-api/usecase/produto"
+	"go-rest-api/service/produto"
 
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 )
 
+//Function responsible to configure routes to API REST
 func LoadApiRoutes(service *produto.ProdutoService) *mux.Router {
 	n := negroni.New()
 	route := mux.NewRouter()
