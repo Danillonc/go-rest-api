@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-rest-api/api/presentation"
 	"go-rest-api/domain"
 	"go-rest-api/service/produto"
@@ -24,8 +23,23 @@ func CriarProduto(service *produto.ProdutoService) http.Handler {
 
 }
 
-func BuscarProduto(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("teste")
+func ListarProdutos(service *produto.ProdutoService) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		produtosDomain := service.ListarProdutosService()
+		pPresentation := presentation.Produto{}
+		produtosPresentation := []presentation.Produto{}
+
+		for i := range produtosDomain {
+			pPresentation.Id = produtosDomain[i].Id
+			pPresentation.Nome = produtosDomain[i].Nome
+			pPresentation.Descricao = produtosDomain[i].Descricao
+			pPresentation.Preco = produtosDomain[i].Preco
+			pPresentation.Quantidade = produtosDomain[i].Quantidade
+
+			produtosPresentation = append(produtosPresentation, pPresentation)
+		}
+		json.NewEncoder(w).Encode(produtosPresentation)
+	})
 }
 
 func AtualizarProduto(w http.ResponseWriter, r *http.Request) {

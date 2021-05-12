@@ -27,8 +27,34 @@ func (r *PostgresSQL) CriarProduto(produto domain.Produto) {
 
 }
 
-func (r *PostgresSQL) BuscarProduto(idProduto string) *domain.Produto {
-	return nil
+func (r *PostgresSQL) ListarProdutos() []domain.Produto {
+	produtosDb, err := r.db.Query("select * from produtos order by id asc")
+	if err != nil {
+		panic(err.Error())
+	}
+	p := domain.Produto{}
+	produtos := []domain.Produto{}
+
+	for produtosDb.Next() {
+		var id, quantidade int
+		var nome, descricao string
+		var preco float64
+
+		err := produtosDb.Scan(&id, &nome, &descricao, &preco, &quantidade)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		p.Id = id
+		p.Nome = nome
+		p.Descricao = descricao
+		p.Preco = preco
+		p.Quantidade = quantidade
+
+		produtos = append(produtos, p)
+	}
+	return produtos
 }
 
 func (r *PostgresSQL) AtualizarProduto(produto domain.Produto) *domain.Produto {

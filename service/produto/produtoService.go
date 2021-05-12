@@ -20,9 +20,8 @@ func (s *ProdutoService) CriarProdutoService(produto domain.Produto) {
 	s.repository.CriarProduto(produto)
 }
 
-func (s *ProdutoService) BuscarProdutoService(idProduto string) *domain.Produto {
-	return nil
-
+func (s *ProdutoService) ListarProdutosService() []domain.Produto {
+	return s.repository.ListarProdutos()
 }
 
 func (s *ProdutoService) AtualizarProdutoService(produto domain.Produto) *domain.Produto {
