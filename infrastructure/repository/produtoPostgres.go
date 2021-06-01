@@ -57,6 +57,10 @@ func (r *PostgresSQL) ListarProdutos() []domain.Produto {
 	return produtos
 }
 
+func BuscarProduto(id string) *domain.Produto {
+
+}
+
 func (r *PostgresSQL) AtualizarProduto(produto domain.Produto) *domain.Produto {
 	return nil
 }

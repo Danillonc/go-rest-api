@@ -42,6 +42,16 @@ func ListarProdutos(service *produto.ProdutoService) http.Handler {
 	})
 }
 
+func BuscarProduto(service *produto.ProdutoService) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		//obter o id do produto do queryparam, bsucar na base o domain e montar o json
+		id := r.URL.Query().Get("id")
+		produtoDomain := service.BuscarProduto(id)
+		json.NewEncoder(w).Encode(produtoDomain)
+
+	})
+}
+
 func AtualizarProduto(w http.ResponseWriter, r *http.Request) {
 
 }
