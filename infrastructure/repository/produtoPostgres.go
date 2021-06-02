@@ -28,6 +28,13 @@ func (r *PostgresSQL) CriarProduto(produto domain.Produto) {
 }
 
 func (r *PostgresSQL) ListarProdutos() []domain.Produto {
+	// err := r.db.Ping()
+	// NewPostgresSQL()
+	// if err != nil {
+	// 	fmt.Println("CLOSED/OPENING")
+	// 	NewPostgresSQL(r.db.Driver().Open("postgres"))
+
+	// }
 	produtosDb, err := r.db.Query("select * from produtos order by id asc")
 	if err != nil {
 		panic(err.Error())
@@ -54,10 +61,38 @@ func (r *PostgresSQL) ListarProdutos() []domain.Produto {
 
 		produtos = append(produtos, p)
 	}
+
 	return produtos
 }
 
-func BuscarProduto(id string) *domain.Produto {
+func (r *PostgresSQL) BuscarProduto(id string) *domain.Produto {
+
+	produtoDb, err := r.db.Query("select * from produtos where id = $1", id)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	produto := domain.Produto{}
+	for produtoDb.Next() {
+		var id, quantidade int
+		var nome, descricao string
+		var preco float64
+
+		err := produtoDb.Scan(&id, &nome, &descricao, &preco, &quantidade)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		produto.Id = id
+		produto.Nome = nome
+		produto.Descricao = descricao
+		produto.Preco = preco
+		produto.Quantidade = quantidade
+	}
+
+	return &produto
 
 }
 
